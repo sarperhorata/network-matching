@@ -1,0 +1,64 @@
+services:
+  # Backend API
+  - type: web
+    name: oniki-backend
+    env: node
+    region: frankfurt
+    plan: starter
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && node dist/main.js
+    healthCheckPath: /api
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: oniki-postgres
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: oniki-postgres
+          property: port
+      - key: DATABASE_USER
+        fromDatabase:
+          name: oniki-postgres
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: oniki-postgres
+          property: password
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: oniki-postgres
+          property: database
+      - key: REDIS_HOST
+        fromService:
+          name: oniki-redis
+          type: redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          name: oniki-redis
+          type: redis
+          property: port
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://oniki-frontend.onrender.com
+
+  # PostgreSQL Database
+databases:
+  - name: oniki-postgres
+    databaseName: oniki_net
+    user: oniki_user
+    plan: starter
+    region: frankfurt
+
+  # Redis
+  - name: oniki-redis
+    plan: starter
+    region: frankfurt
+    type: redis
+
