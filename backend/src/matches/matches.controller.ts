@@ -1,8 +1,11 @@
 import { Controller, Get, Post, Put, Body, Param, UseGuards, Request } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { MatchesService } from './matches.service';
 import { GenerateMatchesDto } from './dto/generate-matches.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 
+@ApiTags('Matches')
+@ApiBearerAuth('JWT-auth')
 @Controller('matches')
 export class MatchesController {
   constructor(private readonly matchesService: MatchesService) {}

@@ -1,3 +1,9 @@
+// Fix for Node.js 18 crypto issue
+import { webcrypto } from 'crypto';
+if (!globalThis.crypto) {
+  globalThis.crypto = webcrypto as any;
+}
+
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,6 +16,7 @@ import { MatchesModule } from './matches/matches.module';
 import { MessagesModule } from './messages/messages.module';
 import { MeetingsModule } from './meetings/meetings.module';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { TenantsModule } from './tenants/tenants.module';
 
 @Module({
   imports: [
@@ -37,7 +44,14 @@ import { AnalyticsModule } from './analytics/analytics.module';
     }),
 
     // Feature modules
+    TenantsModule,
     AuthModule,
+    UsersModule,
+    EventsModule,
+    MatchesModule,
+    MessagesModule,
+    MeetingsModule,
+    AnalyticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

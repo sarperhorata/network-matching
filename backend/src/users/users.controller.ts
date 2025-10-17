@@ -1,4 +1,5 @@
 import { Controller, Get, Put, Param, Body, UseGuards, Request, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UsersService } from './users.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -8,6 +9,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { UserRole } from './entities/user.entity';
 import { FileUploadService } from '../common/services/file-upload.service';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(

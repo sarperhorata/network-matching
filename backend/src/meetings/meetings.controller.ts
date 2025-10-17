@@ -1,10 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Request, Query } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { MeetingsService } from './meetings.service';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { UpdateMeetingDto } from './dto/update-meeting.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { MeetingStatus } from './entities/meeting.entity';
 
+@ApiTags('Meetings')
+@ApiBearerAuth('JWT-auth')
 @Controller('meetings')
 export class MeetingsController {
   constructor(private readonly meetingsService: MeetingsService) {}

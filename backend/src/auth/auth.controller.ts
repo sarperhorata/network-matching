@@ -1,25 +1,131 @@
 import { Controller, Post, Body, Get, UseGuards, Request } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @ApiOperation({ 
+    summary: 'Register a new user',
+    description: 'Create a new user account with email and password. Returns user data and JWT token.'
+  })
+  @ApiBody({
+    type: RegisterDto,
+    examples: {
+      participant: {
+        summary: 'Participant Registration',
+        value: {
+          email: 'john.doe@example.com',
+          password: 'SecurePass123!',
+          firstName: 'John',
+          lastName: 'Doe',
+          role: 'participant',
+          company: 'Tech Corp',
+          position: 'Software Engineer',
+          industries: ['Technology', 'Finance'],
+          interests: ['Artificial Intelligence', 'Blockchain'],
+          networkingGoals: ['Find Business Partners', 'Knowledge Sharing']
+        }
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: 201, 
+    description: 'User successfully registered',
+    schema: {
+      example: {
+        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+        user: {
+          id: '550e8400-e29b-41d4-a716-446655440000',
+          email: 'john.doe@example.com',
+          firstName: 'John',
+          lastName: 'Doe',
+          role: 'participant',
+          company: 'Tech Corp',
+          position: 'Software Engineer'
+        }
+      }
+    }
+  })
+  @ApiResponse({ status: 409, description: 'Email already exists' })
   async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
   @Post('login')
+  @ApiOperation({ 
+    summary: 'Login user',
+    description: 'Authenticate user with email and password. Returns JWT token for subsequent requests.'
+  })
+  @ApiBody({
+    type: LoginDto,
+    examples: {
+      user: {
+        summary: 'User Login',
+        value: {
+          email: 'john.doe@example.com',
+          password: 'SecurePass123!'
+        }
+      }
+    }
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'User successfully logged in',
+    schema: {
+      example: {
+        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+        user: {
+          id: '550e8400-e29b-41d4-a716-446655440000',
+          email: 'john.doe@example.com',
+          firstName: 'John',
+          lastName: 'Doe',
+          role: 'participant'
+        }
+      }
+    }
+  })
+  @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
   @Get('me')
+  @ApiOperation({ 
+    summary: 'Get current user profile',
+    description: 'Returns the profile of the currently authenticated user'
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Current user profile',
+    schema: {
+      example: {
+        id: '550e8400-e29b-41d4-a716-446655440000',
+        email: 'john.doe@example.com',
+        role: 'participant',
+        firstName: 'John',
+        lastName: 'Doe',
+        company: 'Tech Corp',
+        position: 'Software Engineer',
+        bio: 'Passionate about AI and networking',
+        industries: ['Technology', 'Finance'],
+        interests: ['Artificial Intelligence', 'Blockchain'],
+        networkingGoals: ['Find Business Partners'],
+        linkedinUrl: 'https://linkedin.com/in/johndoe',
+        isActive: true,
+        createdAt: '2025-10-17T10:00:00.000Z'
+      }
+    }
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   async getProfile(@Request() req) {
     return this.authService.getProfile(req.user.id);
   }
