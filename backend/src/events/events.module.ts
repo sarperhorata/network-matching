@@ -9,7 +9,7 @@ import { EventParticipant } from './entities/event-participant.entity';
   imports: [TypeOrmModule.forFeature([Event, EventParticipant])],
   controllers: [EventsController],
   providers: [EventsService],
-  exports: [EventsService],
+  exports: [EventsService, TypeOrmModule],
 })
 export class EventsModule {}
 
