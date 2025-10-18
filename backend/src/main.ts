@@ -43,6 +43,7 @@ async function bootstrap() {
     .addTag('Meetings', 'Meeting scheduler and calendar')
     .addTag('Analytics', 'Platform analytics and insights')
     .addTag('Tenants', 'Multi-tenant white-label management')
+    .addTag('Notifications', 'Real-time notification system')
     .addBearerAuth(
       {
         type: 'http',

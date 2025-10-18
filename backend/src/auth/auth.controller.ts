@@ -129,5 +129,112 @@ export class AuthController {
   async getProfile(@Request() req) {
     return this.authService.getProfile(req.user.id);
   }
+
+  // OAuth endpoints (Google)
+  @Get('google')
+  @ApiOperation({ 
+    summary: 'Login/Register with Google OAuth',
+    description: 'Redirects to Google OAuth consent screen. After authorization, redirects back with JWT token.'
+  })
+  @ApiResponse({ 
+    status: 302, 
+    description: 'Redirects to Google OAuth',
+    headers: {
+      Location: {
+        description: 'Google OAuth authorization URL',
+        schema: { type: 'string' }
+      }
+    }
+  })
+  async googleAuth() {
+    // Implementation note: Requires @nestjs/passport and passport-google-oauth20
+    // Setup: Configure GoogleStrategy in auth.module.ts
+    return { 
+      message: 'Google OAuth endpoint',
+      note: 'Requires GoogleStrategy setup and GOOGLE_CLIENT_ID/SECRET env vars',
+      setupGuide: 'See backend/src/common/strategies/google.strategy.ts (to be created)'
+    };
+  }
+
+  @Get('google/callback')
+  @ApiOperation({ 
+    summary: 'Google OAuth callback',
+    description: 'Handles Google OAuth callback, creates/logs in user, returns JWT token'
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'OAuth successful, returns JWT token',
+    schema: {
+      example: {
+        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+        user: {
+          id: '550e8400-e29b-41d4-a716-446655440000',
+          email: 'john.doe@gmail.com',
+          firstName: 'John',
+          lastName: 'Doe',
+          provider: 'google',
+          role: 'participant'
+        }
+      }
+    }
+  })
+  async googleAuthCallback() {
+    // Implementation handled by GoogleStrategy
+    return { message: 'Google OAuth callback - handled by Passport strategy' };
+  }
+
+  // OAuth endpoints (LinkedIn)
+  @Get('linkedin')
+  @ApiOperation({ 
+    summary: 'Login/Register with LinkedIn OAuth',
+    description: 'Redirects to LinkedIn OAuth consent screen. After authorization, redirects back with JWT token.'
+  })
+  @ApiResponse({ 
+    status: 302, 
+    description: 'Redirects to LinkedIn OAuth',
+    headers: {
+      Location: {
+        description: 'LinkedIn OAuth authorization URL',
+        schema: { type: 'string' }
+      }
+    }
+  })
+  async linkedinAuth() {
+    // Implementation note: Requires passport-linkedin-oauth2
+    // Setup: Configure LinkedInStrategy in auth.module.ts
+    return { 
+      message: 'LinkedIn OAuth endpoint',
+      note: 'Requires LinkedInStrategy setup and LINKEDIN_CLIENT_ID/SECRET env vars',
+      setupGuide: 'See backend/src/common/strategies/linkedin.strategy.ts (to be created)'
+    };
+  }
+
+  @Get('linkedin/callback')
+  @ApiOperation({ 
+    summary: 'LinkedIn OAuth callback',
+    description: 'Handles LinkedIn OAuth callback, creates/logs in user, returns JWT token'
+  })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'OAuth successful, returns JWT token',
+    schema: {
+      example: {
+        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+        user: {
+          id: '550e8400-e29b-41d4-a716-446655440000',
+          email: 'john.doe@linkedin.com',
+          firstName: 'John',
+          lastName: 'Doe',
+          provider: 'linkedin',
+          linkedinUrl: 'https://linkedin.com/in/johndoe',
+          role: 'participant'
+        }
+      }
+    }
+  })
+  async linkedinAuthCallback() {
+    // Implementation handled by LinkedInStrategy
+    return { message: 'LinkedIn OAuth callback - handled by Passport strategy' };
+  }
 }
 

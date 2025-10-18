@@ -17,6 +17,7 @@ import { MessagesModule } from './messages/messages.module';
 import { MeetingsModule } from './meetings/meetings.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { TenantsModule } from './tenants/tenants.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { TenantsModule } from './tenants/tenants.module';
     MessagesModule,
     MeetingsModule,
     AnalyticsModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
