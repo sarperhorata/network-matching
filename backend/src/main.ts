@@ -33,15 +33,16 @@ async function bootstrap() {
   // Swagger documentation
   const config = new DocumentBuilder()
     .setTitle('Oniki.net API')
-    .setDescription('AI-powered network matchmaking platform API documentation')
+    .setDescription('AI-powered network matchmaking platform API documentation - Complete with 46 endpoints')
     .setVersion('1.0.0')
     .addTag('Authentication', 'User authentication and authorization')
     .addTag('Users', 'User profile management')
     .addTag('Events', 'Event management and participation')
-    .addTag('Matches', 'AI-powered matching system')
-    .addTag('Messages', 'Real-time messaging')
-    .addTag('Meetings', 'Meeting scheduler')
+    .addTag('Matches', 'AI-powered matching system with 4 algorithms')
+    .addTag('Messages', 'Real-time messaging with WebSocket')
+    .addTag('Meetings', 'Meeting scheduler and calendar')
     .addTag('Analytics', 'Platform analytics and insights')
+    .addTag('Tenants', 'Multi-tenant white-label management')
     .addBearerAuth(
       {
         type: 'http',

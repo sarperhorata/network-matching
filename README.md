@@ -19,6 +19,19 @@
 - 📱 **Responsive Design** optimized for all devices
 - 🎯 **Production Ready** - 95% platform completion
 
+### 🎨 **Live Design Preview**
+🌐 **Interactive Demo**: [View Figma Design Prototype](https://pitch-park-04233792.figma.site)
+
+> Experience the modern UI design with interactive prototypes, animations, and full user flows.
+
+**Design Highlights**:
+- ✨ Gradient hero sections (Blue → Navy → Orange)
+- 🎯 46 modern UI components (shadcn/ui + Radix UI)
+- 📊 Interactive charts and analytics
+- 💬 Modern chat interface with gradients
+- 🎴 Beautiful card layouts
+- 📱 Fully responsive (mobile, tablet, desktop)
+
 ### 🚀 **Quick Start**
 ```bash
 # Clone & Install
@@ -44,6 +57,7 @@ docker-compose up -d
 
 - [Overview](#-overview)
 - [Features](#-features)
+- [Design & Screenshots](#-design--screenshots) ⭐ NEW!
 - [Tech Stack](#-tech-stack)
 - [Quick Start](#-quick-start)
 - [API Documentation](#-api-documentation)
@@ -132,21 +146,109 @@ docker-compose up -d
 
 ---
 
+## 🎨 Design & Screenshots
+
+### 🌐 Interactive Design Preview
+**Live Prototype**: [https://pitch-park-04233792.figma.site](https://pitch-park-04233792.figma.site)
+
+> 👆 Click to explore the interactive Figma prototype with full user flows, animations, and responsive designs!
+
+### 🖼️ Platform Screenshots
+
+#### 🏠 **Landing Page**
+Modern gradient hero section with feature showcase
+```
+🎨 Gradient: Blue (#0EA5E9) → Navy (#0A2540) → Orange (#F59E0B)
+✨ Features: AI Matching, Event Management, Real-time Chat
+📱 Fully responsive with mobile-first design
+```
+
+#### 📊 **Dashboard**
+Analytics at a glance with interactive charts
+```
+📈 Charts: Activity trends (Area chart), Weekly interactions (Bar chart), Match status (Pie chart)
+🎯 Stats: Events attended, Total matches, Meetings scheduled
+🚀 Quick actions: Explore events, View matches, Send messages
+```
+
+#### 📅 **Events Page**
+Beautiful event cards with search and filters
+```
+🔍 Search: Real-time event search
+🏷️ Filters: 10+ category filters
+🎴 Cards: Image, date, location, participant count
+🎨 Colorful badges for categories
+```
+
+#### 🤝 **Matches Page**
+AI-powered connections with algorithm breakdown
+```
+🤖 AI Score: Visual progress bar with 4-algorithm breakdown
+⭐ Match Reasons: Badges showing why matched
+👥 Tabs: My Matches vs AI Recommendations
+🎯 Actions: Accept, Reject, Message
+```
+
+#### 💬 **Messages Page**
+Modern chat interface inspired by WhatsApp
+```
+💬 Gradient Bubbles: Blue-Navy gradient for sent messages
+✓✓ Read Receipts: Check marks for message status
+👤 Avatars: Gradient fallback avatars
+⌨️ Typing Indicator: Real-time typing status
+```
+
+### 🎨 Design System
+
+**Color Palette**:
+- Primary Blue: `#0EA5E9` - Actions, links, highlights
+- Dark Navy: `#0A2540` - Headings, professional dark
+- Accent Orange: `#F59E0B` - CTAs, warnings
+- Success Green: `#10B981` - Success states
+- Purple: `#8B5CF6` - Secondary accents
+
+**Typography**:
+- Headlines: Bold, large (text-3xl to text-5xl)
+- Body: Clean, readable (text-sm to text-base)
+- Monospace: Code blocks and technical content
+
+**Components**:
+- Modern rounded corners (border-radius: 0.5rem)
+- Subtle shadows for depth (shadow-md, shadow-lg)
+- Smooth transitions (transition-all, transition-colors)
+- Hover effects on interactive elements
+
+**Icons**:
+- Library: Lucide React (100+ icons)
+- Style: Outlined, consistent stroke width
+- Usage: Calendar, Users, MessageCircle, Star, Sparkles, etc.
+
+---
+
+## 🏗️ Tech Stack
+
 ### 🎨 Frontend
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
 | React | 18.3 | UI framework |
 | TypeScript | 5.9 | Type safety |
-| Vite | 7.1 | Build tool & dev server |
+| Vite | 5.4 | Build tool & dev server |
 | TailwindCSS | 3.x | Utility-first CSS |
+| **Radix UI** | **Latest** | **46 headless UI components** |
+| **shadcn/ui** | **Latest** | **Modern component library** |
+| **Lucide React** | **0.487** | **Icon library (100+ icons)** |
+| **Recharts** | **2.15** | **Charts & data visualization** |
 | Zustand | Latest | State management |
 | React Router | 6.x | Client-side routing |
+| React Hook Form | 7.55 | Form management |
+| Sonner | 2.0 | Toast notifications |
 | Axios | Latest | HTTP client |
 | Socket.IO Client | Latest | WebSocket client |
-| React Hot Toast | Latest | Notifications |
 | QRCode | Latest | QR code generation |
 | Vite PWA Plugin | Latest | Progressive Web App |
+
+**🎨 Design Source**: [Figma Prototype](https://pitch-park-04233792.figma.site)
 
 ### ⚙️ Backend
 
