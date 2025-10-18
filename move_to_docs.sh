@@ -1,3 +1,62 @@
+#!/bin/bash
+
+cd /Users/sarperhorata/12net
+
+echo "📚 Dökümanları docs/ klasörüne taşıyorum..."
+echo ""
+
+# Ana dizinde docs klasörünü oluştur
+mkdir -p docs/guides
+mkdir -p docs/reports  
+mkdir -p docs/scripts
+
+echo "✅ docs/ klasör yapısı oluşturuldu!"
+echo ""
+
+# GUIDES - Setup ve implementasyon rehberleri
+echo "📖 Guides taşınıyor..."
+[ -f "ROADMAP.md" ] && mv ROADMAP.md docs/guides/ && echo "  ✅ ROADMAP.md"
+[ -f "backend/OAUTH_SETUP_GUIDE.md" ] && mv backend/OAUTH_SETUP_GUIDE.md docs/guides/ && echo "  ✅ OAUTH_SETUP_GUIDE.md"
+[ -f "API_REFERENCE.md" ] && mv API_REFERENCE.md docs/guides/ && echo "  ✅ API_REFERENCE.md"
+[ -f "GETTING_STARTED.md" ] && mv GETTING_STARTED.md docs/guides/ && echo "  ✅ GETTING_STARTED.md"
+[ -f "DEPLOYMENT_CHECKLIST.md" ] && mv DEPLOYMENT_CHECKLIST.md docs/guides/ && echo "  ✅ DEPLOYMENT_CHECKLIST.md"
+[ -f "PRODUCTION_DEPLOYMENT_GUIDE.md" ] && mv PRODUCTION_DEPLOYMENT_GUIDE.md docs/guides/ && echo "  ✅ PRODUCTION_DEPLOYMENT_GUIDE.md"
+
+# REPORTS - Status raporları ve analizler
+echo ""
+echo "📊 Reports taşınıyor..."
+[ -f "COMPLETE_SESSION_FINAL_REPORT.md" ] && mv COMPLETE_SESSION_FINAL_REPORT.md docs/reports/ && echo "  ✅ COMPLETE_SESSION_FINAL_REPORT.md"
+[ -f "SESSION_COMPLETE_SUMMARY.md" ] && mv SESSION_COMPLETE_SUMMARY.md docs/reports/ && echo "  ✅ SESSION_COMPLETE_SUMMARY.md"
+[ -f "FRONTEND_BACKEND_INTEGRATION_STATUS.md" ] && mv FRONTEND_BACKEND_INTEGRATION_STATUS.md docs/reports/ && echo "  ✅ FRONTEND_BACKEND_INTEGRATION_STATUS.md"
+[ -f "docs/reports/FEATURE_GAP_ANALYSIS.md" ] && echo "  ✅ FEATURE_GAP_ANALYSIS.md (zaten taşınmış)"
+[ -f "docs/reports/QUICK_REFERENCE_GAPS.md" ] && echo "  ✅ QUICK_REFERENCE_GAPS.md (zaten taşınmış)"
+[ -f "QUICK_WINS_COMPLETED.md" ] && mv QUICK_WINS_COMPLETED.md docs/reports/ && echo "  ✅ QUICK_WINS_COMPLETED.md"
+[ -f "PROJECT_STATUS_REPORT.md" ] && mv PROJECT_STATUS_REPORT.md docs/reports/ && echo "  ✅ PROJECT_STATUS_REPORT.md"
+[ -f "FIGMA_INTEGRATION_SUMMARY.md" ] && mv FIGMA_INTEGRATION_SUMMARY.md docs/reports/ && echo "  ✅ FIGMA_INTEGRATION_SUMMARY.md"
+[ -f "SESSION_SUMMARY.md" ] && mv SESSION_SUMMARY.md docs/reports/ && echo "  ✅ SESSION_SUMMARY.md"
+[ -f "MVP_SUMMARY.md" ] && mv MVP_SUMMARY.md docs/reports/ && echo "  ✅ MVP_SUMMARY.md"
+[ -f "FINAL_UPDATE_SUMMARY.md" ] && mv FINAL_UPDATE_SUMMARY.md docs/reports/ && echo "  ✅ FINAL_UPDATE_SUMMARY.md"
+
+# SCRIPTS - Otomasyon ve helper script'ler
+echo ""
+echo "🔧 Scripts taşınıyor..."
+[ -f "GIT_PUSH_FINAL_COMMANDS.sh" ] && mv GIT_PUSH_FINAL_COMMANDS.sh docs/scripts/ && echo "  ✅ GIT_PUSH_FINAL_COMMANDS.sh"
+[ -f "GIT_PUSH_WITH_ROADMAP.sh" ] && mv GIT_PUSH_WITH_ROADMAP.sh docs/scripts/ && echo "  ✅ GIT_PUSH_WITH_ROADMAP.sh"
+[ -f "GIT_PUSH_COMMANDS.sh" ] && mv GIT_PUSH_COMMANDS.sh docs/scripts/ && echo "  ✅ GIT_PUSH_COMMANDS.sh"
+[ -f "FINAL_COMMIT_MESSAGE.txt" ] && mv FINAL_COMMIT_MESSAGE.txt docs/scripts/ && echo "  ✅ FINAL_COMMIT_MESSAGE.txt"
+[ -f "organize_docs.sh" ] && mv organize_docs.sh docs/scripts/ && echo "  ✅ organize_docs.sh"
+[ -f "ORGANIZE_AND_PUSH.sh" ] && mv ORGANIZE_AND_PUSH.sh docs/scripts/ && echo "  ✅ ORGANIZE_AND_PUSH.sh"
+[ -f "MANUAL_ORGANIZE_COMMANDS.md" ] && mv MANUAL_ORGANIZE_COMMANDS.md docs/scripts/ && echo "  ✅ MANUAL_ORGANIZE_COMMANDS.md"
+[ -f "auto_push.sh" ] && mv auto_push.sh docs/scripts/ && echo "  ✅ auto_push.sh"
+[ -f ".commit-message.txt" ] && mv .commit-message.txt docs/scripts/ && echo "  ✅ .commit-message.txt"
+[ -f "PUSH_NOW.md" ] && mv PUSH_NOW.md docs/scripts/ && echo "  ✅ PUSH_NOW.md"
+[ -f "DOCS_ORGANIZATION_COMMIT.txt" ] && mv DOCS_ORGANIZATION_COMMIT.txt docs/scripts/ && echo "  ✅ DOCS_ORGANIZATION_COMMIT.txt"
+
+echo ""
+echo "📝 docs/README.md oluşturuluyor..."
+
+# docs/README.md'yi güncelle (zaten var ama daha kapsamlı yap)
+cat > docs/README.md << 'DOCREADME'
 # 📚 Oniki.net - Comprehensive Documentation
 
 All project documentation organized into a clear, navigable structure.
@@ -187,3 +246,44 @@ For the latest platform information, always refer to the [Main README](../README
 **🎉 Platform Status: 99% Complete - Production Ready!**
 
 **Built with ❤️ by the Oniki.net Team**
+DOCREADME
+
+echo "✅ docs/README.md oluşturuldu!"
+echo ""
+
+# Git'e ekle
+git add docs/
+git add -A
+
+echo "=================================="
+echo "✅ TAMAMLANDI!"
+echo "=================================="
+echo ""
+echo "📊 Sonuç:"
+echo "  ✅ docs/ klasörü oluşturuldu"
+echo "  ✅ docs/guides/ (6+ dosya)"
+echo "  ✅ docs/reports/ (11+ dosya)"
+echo "  ✅ docs/scripts/ (11+ dosya)"
+echo "  ✅ docs/README.md (kapsamlı index)"
+echo ""
+echo "📁 Ana dizinde kalan:"
+echo "  - README.md (ana proje readme)"
+echo "  - LICENSE"
+echo "  - frontend/"
+echo "  - backend/"
+echo "  - .env files"
+echo "  - package.json"
+echo ""
+echo "🔄 Git durumu:"
+git status --short | head -30
+echo ""
+echo "📝 Sonraki adım: Commit ve push"
+echo "   git commit -m \"docs: Organize all documentation into docs/ directory\""
+echo "   git push origin main"
+DOCREADME
+
+chmod +x move_to_docs.sh
+
+echo "✅ docs/README.md oluşturuldu!"
+echo ""
+
