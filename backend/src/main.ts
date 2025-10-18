@@ -44,6 +44,7 @@ async function bootstrap() {
     .addTag('Analytics', 'Platform analytics and insights')
     .addTag('Tenants', 'Multi-tenant white-label management')
     .addTag('Notifications', 'Real-time notification system')
+    .addTag('Speed Dating', '⚡ Business speed networking sessions')
     .addBearerAuth(
       {
         type: 'http',

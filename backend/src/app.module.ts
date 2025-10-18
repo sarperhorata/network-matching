@@ -18,6 +18,10 @@ import { MeetingsModule } from './meetings/meetings.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { TenantsModule } from './tenants/tenants.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { SpeedDatingModule } from './speed-dating/speed-dating.module';
+import { SerendipityModule } from './serendipity/serendipity.module';
+import { SocialCapitalModule } from './social-capital/social-capital.module';
+import { TravelBuddyModule } from './travel-buddy/travel-buddy.module';
 
 @Module({
   imports: [
@@ -54,6 +58,10 @@ import { NotificationsModule } from './notifications/notifications.module';
     MeetingsModule,
     AnalyticsModule,
     NotificationsModule,
+    SpeedDatingModule,
+    SerendipityModule,
+    SocialCapitalModule,
+    TravelBuddyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
