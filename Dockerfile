@@ -76,8 +76,8 @@ RUN mkdir -p uploads && chown -R nestjs:nodejs uploads
 COPY --from=frontend-builder /app/frontend/dist /usr/share/nginx/html
 COPY frontend/nginx.conf /etc/nginx/nginx.conf
 RUN chown -R nestjs:nodejs /usr/share/nginx/html && \
-    mkdir -p /var/cache/nginx /var/log/nginx && \
-    chown -R nestjs:nodejs /var/cache/nginx /var/log/nginx /var/run
+    mkdir -p /var/cache/nginx /var/log/nginx /var/lib/nginx/logs /var/lib/nginx/tmp/client_body && \
+    chown -R nestjs:nodejs /var/cache/nginx /var/log/nginx /var/run /var/lib/nginx
 
 # Create supervisor config
 RUN mkdir -p /etc/supervisor/conf.d /var/log/supervisor
