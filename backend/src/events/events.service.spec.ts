@@ -57,8 +57,8 @@ describe('EventsService', () => {
       const createEventDto = {
         title: 'Test Event',
         description: 'Test Description',
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: new Date().toISOString(),
+        endDate: new Date().toISOString(),
         location: 'Test Location',
         categories: ['Technology Conference'],
         capacity: 100,
@@ -194,13 +194,13 @@ describe('EventsService', () => {
       mockParticipantRepository.findOne.mockResolvedValue(participant);
       mockParticipantRepository.save.mockResolvedValue({
         ...participant,
-        checkedIn: true,
+        hasCheckedIn: true,
         checkInTime: new Date(),
       });
 
       const result = await service.checkIn(eventId, userId);
 
-      expect(result.checkedIn).toBe(true);
+      expect(result.hasCheckedIn).toBe(true);
       expect(result.checkInTime).toBeDefined();
     });
 

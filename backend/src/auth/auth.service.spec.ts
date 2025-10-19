@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AuthService } from './auth.service';
-import { User } from '../users/entities/user.entity';
+import { User, UserRole } from '../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 
 describe('AuthService', () => {
@@ -53,7 +53,7 @@ describe('AuthService', () => {
         password: 'password123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'participant' as const,
+        role: UserRole.PARTICIPANT,
       };
 
       const hashedPassword = await bcrypt.hash(registerDto.password, 10);
@@ -80,7 +80,7 @@ describe('AuthService', () => {
         password: 'password123',
         firstName: 'Test',
         lastName: 'User',
-        role: 'participant' as const,
+        role: UserRole.PARTICIPANT,
       };
 
       mockUserRepository.findOne.mockResolvedValue({ id: '1', email: registerDto.email });
