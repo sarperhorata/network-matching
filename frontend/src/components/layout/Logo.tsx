@@ -1,6 +1,3 @@
-import React from 'react';
-import { useWhiteLabel } from '../../contexts/WhiteLabelContext';
-
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'white';
@@ -8,7 +5,6 @@ interface LogoProps {
 }
 
 export function Logo({ size = 'md', variant = 'default', showText = true }: LogoProps) {
-  const { config } = useWhiteLabel();
   const sizeClasses = {
     sm: 'h-6 w-6',
     md: 'h-8 w-8',
@@ -77,7 +73,7 @@ export function Logo({ size = 'md', variant = 'default', showText = true }: Logo
       
       {showText && (
         <span className={`${textSizeClasses[size]} font-semibold tracking-tight ${textColor}`}>
-          {config.brandName.toLowerCase()}
+          oniki.net
         </span>
       )}
     </div>
