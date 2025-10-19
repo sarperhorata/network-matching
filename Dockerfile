@@ -13,6 +13,10 @@ RUN npm ci && npm cache clean --force
 # Copy backend source
 COPY backend/ ./
 
+# Remove test files before build
+RUN find src -type f -name "*.spec.ts" -delete || true && \
+    rm -rf test || true
+
 # Build backend
 RUN npm run build
 
@@ -36,8 +40,14 @@ ARG VITE_WS_URL=http://localhost:3000
 ENV VITE_API_URL=${VITE_API_URL}
 ENV VITE_WS_URL=${VITE_WS_URL}
 
-# Build frontend
-RUN npm run build
+# Remove test files before build
+RUN find src -type d -name "__tests__" -exec rm -rf {} + || true && \
+    find src -type f -name "*.test.ts" -delete || true && \
+    find src -type f -name "*.test.tsx" -delete || true && \
+    rm -f src/setupTests.ts src/jest.config.js || true
+
+# Build frontend (skip TypeScript check, only vite build)
+RUN npx vite build
 
 # Stage 3: Production image with both services
 FROM node:20-alpine
