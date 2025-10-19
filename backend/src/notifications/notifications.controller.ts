@@ -50,7 +50,7 @@ export class NotificationsController {
   async getNotifications(
     @Request() req,
     @Query('limit') limit?: number,
-    @Query('onlyUnread') onlyUnread?: boolean,
+    @Query('onlyUnread') onlyUnread?: string | boolean,
   ) {
     return this.notificationsService.findByUser(
       req.user.id,
