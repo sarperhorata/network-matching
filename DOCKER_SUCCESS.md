@@ -9,9 +9,12 @@
 
 ## 🎯 DEPLOYMENT STATUS
 
-### Container: `oniki` ✅ HEALTHY
-- **Backend (NestJS)**: ✅ RUNNING (PID 8) - Port 3000
-- **Frontend (Nginx)**: ✅ RUNNING (PID 9, 15) - Port 80
+### Container: `oniki` ✅ HEALTHY - AYRI İŞLEMLER!
+- **Backend (NestJS)**: ✅ RUNNING - PID 8 - Port 3000 (node dist/main.js)
+- **Frontend (Nginx)**: ✅ RUNNING - PID 9 (master), PID 15 (worker) - Port 80
+
+**Process Yönetimi:** Supervisor
+**İşlem Sayısı:** 2 ayrı işlem (backend + frontend)
 
 ### Supporting Services
 - **PostgreSQL**: ✅ HEALTHY - Port 5432
@@ -52,13 +55,20 @@
 
 ## 📦 CONTAINER DETAILS
 
-### Process Tree
+### Process Tree (AYRI İŞLEMLER!)
 ```
 oniki (container)
-├── dumb-init (PID 1)
-├── supervisord (PID 7)  
-├── backend: node dist/main.js (PID 8) ✅
-└── frontend: nginx (PID 9, 15) ✅
+├── PID 1:  dumb-init (init system)
+├── PID 7:  supervisord (process manager)
+├── PID 8:  node dist/main.js ✅ BACKEND (Port 3000)
+├── PID 9:  nginx master ✅ FRONTEND (Port 80)
+└── PID 15: nginx worker ✅ FRONTEND (Port 80)
+
+🎯 Backend ve Frontend AYRI PROCESS'LER!
+- Backend: Bağımsız Node.js işlemi
+- Frontend: Bağımsız Nginx işlemi
+- Her biri ayrı restart edilebilir
+- Her birinin ayrı logları var
 ```
 
 ### Resource Usage
@@ -88,11 +98,15 @@ docker-compose up -d
 docker-compose ps
 # Expected: All 3 containers "Up" and "healthy"
 
-# Check processes
-docker exec oniki ps aux | grep -E "(node|nginx)"
-# Expected:
-#   - node dist/main.js (backend)
-#   - nginx (frontend)
+# Check processes (AYRI İŞLEMLER!)
+docker exec oniki ps aux
+# Expected output:
+#   PID 8:  node dist/main.js      ← BACKEND
+#   PID 9:  nginx: master process  ← FRONTEND
+#   PID 15: nginx: worker process  ← FRONTEND
+
+# Sadece backend ve frontend process'leri
+docker exec oniki ps aux | grep -E "(node|nginx)" | grep -v grep
 
 # Test backend
 curl http://localhost:3000/api/health
