@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
-import { Match } from '../matches/entities/match.entity';
+import { Match, MatchStatus } from '../matches/entities/match.entity';
 import { Message } from '../messages/entities/message.entity';
-import { Meeting } from '../meetings/entities/meeting.entity';
+import { Meeting, MeetingStatus } from '../meetings/entities/meeting.entity';
 
 export interface SocialCapitalScore {
   userId: string;
@@ -81,8 +81,8 @@ export class SocialCapitalService {
   private async calculateConnectionsScore(userId: string): Promise<number> {
     const matchCount = await this.matchRepository.count({
       where: [
-        { user1Id: userId, status: 'accepted' },
-        { user2Id: userId, status: 'accepted' },
+        { user1Id: userId, status: MatchStatus.ACCEPTED },
+        { user2Id: userId, status: MatchStatus.ACCEPTED },
       ],
     });
 
@@ -99,7 +99,7 @@ export class SocialCapitalService {
       .leftJoinAndSelect('match.user1', 'user1')
       .leftJoinAndSelect('match.user2', 'user2')
       .where('(match.user1Id = :userId OR match.user2Id = :userId)', { userId })
-      .andWhere('match.status = :status', { status: 'accepted' })
+      .andWhere('match.status = :status', { status: MatchStatus.ACCEPTED })
       .getMany();
 
     const industries = new Set<string>();
@@ -122,8 +122,8 @@ export class SocialCapitalService {
 
     const meetingCount = await this.meetingRepository.count({
       where: [
-        { participant1Id: userId, status: 'completed' },
-        { participant2Id: userId, status: 'completed' },
+        { participant1Id: userId, status: MeetingStatus.COMPLETED },
+        { participant2Id: userId, status: MeetingStatus.COMPLETED },
       ],
     });
 
@@ -146,8 +146,8 @@ export class SocialCapitalService {
 
     const completedMeetings = await this.meetingRepository.count({
       where: [
-        { participant1Id: userId, status: 'completed' },
-        { participant2Id: userId, status: 'completed' },
+        { participant1Id: userId, status: MeetingStatus.COMPLETED },
+        { participant2Id: userId, status: MeetingStatus.COMPLETED },
       ],
     });
 
@@ -176,8 +176,8 @@ export class SocialCapitalService {
 
     const matchCount = await this.matchRepository.count({
       where: [
-        { user1Id: userId, status: 'accepted' },
-        { user2Id: userId, status: 'accepted' },
+        { user1Id: userId, status: MatchStatus.ACCEPTED },
+        { user2Id: userId, status: MatchStatus.ACCEPTED },
       ],
     });
 
@@ -188,8 +188,8 @@ export class SocialCapitalService {
 
     const meetingCount = await this.meetingRepository.count({
       where: [
-        { participant1Id: userId, status: 'completed' },
-        { participant2Id: userId, status: 'completed' },
+        { participant1Id: userId, status: MeetingStatus.COMPLETED },
+        { participant2Id: userId, status: MeetingStatus.COMPLETED },
       ],
     });
 
