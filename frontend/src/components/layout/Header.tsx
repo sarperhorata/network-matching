@@ -168,3 +168,5 @@ export function Header({ onMenuClick }: HeaderProps) {
     </header>
   );
 }
+
+export default Header;
