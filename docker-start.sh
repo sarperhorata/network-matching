@@ -31,7 +31,7 @@ JWT_EXPIRES_IN=7d
 # Application
 PORT=3000
 NODE_ENV=production
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:80
 
 # Frontend
 VITE_API_URL=http://localhost:3000/api
@@ -66,11 +66,16 @@ echo ""
 echo "✅ Docker containers started!"
 echo ""
 echo "📍 Access points:"
-echo "   - Frontend: http://localhost:5173"
+echo "   - Frontend: http://localhost:80"
 echo "   - Backend API: http://localhost:3000/api"
 echo "   - Swagger Docs: http://localhost:3000/api/docs"
 echo "   - PostgreSQL: localhost:5432"
 echo "   - Redis: localhost:6379"
+echo ""
+echo "📦 Container Structure:"
+echo "   oniki (single container)"
+echo "   ├── backend (process: port 3000)"
+echo "   └── frontend (process: port 80)"
 echo ""
 echo "📝 Useful commands:"
 echo "   - View logs: docker-compose logs -f"

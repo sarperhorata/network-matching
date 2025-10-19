@@ -66,7 +66,7 @@ docker-compose ps
 
 Once containers are running:
 
-- **Frontend**: http://localhost:5173
+- **Frontend**: http://localhost:80
 - **Backend API**: http://localhost:3000/api
 - **Swagger Docs**: http://localhost:3000/api/docs
 - **PostgreSQL**: localhost:5432
@@ -85,16 +85,20 @@ Once containers are running:
 - Port: `6379`
 - Persistence: Volume mounted
 
-### 3. Backend API (NestJS)
-- Built from `./backend`
-- Port: `3000`
+### 3. Oniki Platform (Single Container)
+- Container Name: `oniki`
+- Built from root `Dockerfile`
+- Runs 2 processes via Supervisor:
+  - **Backend (NestJS)**: Port `3000`
+  - **Frontend (Nginx)**: Port `80`
 - Dependencies: PostgreSQL, Redis
-- Health check: `/api/health`
+- Health check: Both `/api/health` and `/`
 
-### 4. Frontend (React + Vite)
-- Built from `./frontend`
-- Port: `5173` (mapped to `80` inside container)
-- Served by: Nginx
+**Why Single Container?**
+- Simplified deployment
+- Easier resource management
+- Both processes visible in single container
+- Better for small to medium deployments
 
 ## 🔧 Useful Commands
 
@@ -103,10 +107,21 @@ Once containers are running:
 # All services
 docker-compose logs -f
 
-# Specific service
-docker-compose logs -f backend
-docker-compose logs -f frontend
+# Oniki container (backend + frontend)
+docker-compose logs -f oniki
+
+# Only backend logs
+docker exec oniki tail -f /var/log/supervisor/backend.log
+
+# Only frontend logs
+docker exec oniki tail -f /var/log/supervisor/frontend.log
+
+# Database logs
 docker-compose logs -f postgres
+
+# View processes inside oniki container
+docker exec oniki ps aux
+docker exec oniki supervisorctl status
 ```
 
 ### Stop Services
@@ -123,8 +138,14 @@ docker-compose down -v
 # Restart all
 docker-compose restart
 
-# Restart specific service
-docker-compose restart backend
+# Restart oniki container (both backend + frontend)
+docker-compose restart oniki
+
+# Restart only backend process inside container
+docker exec oniki supervisorctl restart backend
+
+# Restart only frontend process inside container
+docker exec oniki supervisorctl restart frontend
 ```
 
 ### Rebuild After Code Changes
@@ -139,17 +160,21 @@ docker-compose up -d
 
 ### Execute Commands in Container
 ```bash
-# Backend shell
-docker-compose exec backend sh
+# Enter oniki container
+docker exec -it oniki sh
 
-# Run migrations
-docker-compose exec backend npm run migration:run
+# Run backend commands
+docker exec -it oniki sh -c "cd backend && npm run migration:run"
+docker exec -it oniki sh -c "cd backend && npm run seed"
 
-# Seed database
-docker-compose exec backend npm run seed
+# View running processes
+docker exec oniki supervisorctl status
 
-# Frontend shell
-docker-compose exec frontend sh
+# View backend logs
+docker exec oniki supervisorctl tail backend
+
+# View frontend logs
+docker exec oniki supervisorctl tail frontend
 ```
 
 ### Check Container Status
